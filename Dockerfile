@@ -13,5 +13,5 @@ RUN yarn install
 COPY . /app
 RUN yarn build
 
-EXPOSE 80
+EXPOSE 3001
 CMD [ "yarn", "start" ]
