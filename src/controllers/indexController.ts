@@ -34,6 +34,6 @@ indexController.get(
 indexController.get(
   "/health-check",
   asyncHandler(async (req: Request, res: Response) => {
-    res.status(200).send("hello martin");
+    res.status(200).send("hello");
   })
 );
