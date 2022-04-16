@@ -32,8 +32,8 @@ indexController.get(
 );
 
 indexController.get(
-  "/health-check",
+  "/hello-world",
   asyncHandler(async (req: Request, res: Response) => {
-    res.status(200).send("hello");
+    res.status(200).send("Hello, World!");
   })
 );
