@@ -7,5 +7,5 @@ export default {
   password: process.env.DB_PASS,
   database: process.env.DB_DATABASE_NAME,
   port: process.env.DB_PORT,
-  entities: ["src/entity/**/*.ts", './build/src/entity/*.js'],
+  entities: ["src/entity/**/*.ts", "dist/entity/**/*.js"],
 };
