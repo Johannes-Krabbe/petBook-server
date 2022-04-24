@@ -10,7 +10,7 @@ class App {
   constructor() {
     this.app = express();
 
-    this.app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
+    this.app.use(cors({ credentials: true, origin: process.env.CLIENT_URL }));
     this.app.use(express.json());
 
     this.app.use("/", router);
