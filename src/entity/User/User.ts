@@ -15,6 +15,9 @@ export class User extends BaseEntity {
     public username: string
 
     @Column({ type: 'varchar', nullable: false })
+    public email: string
+
+    @Column({ type: 'varchar', nullable: false })
     public passwordHash: string
 
     @Column({ type: 'varchar', nullable: false })
