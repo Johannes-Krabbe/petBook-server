@@ -1,6 +1,7 @@
 export default {
   type: "postgres",
   synchronize: true,
+  dropSchema: true,
   logging: false, // process.env.NODE_ENV !== 'production',
   host: process.env.DB_WRITE_HOST,
   username: process.env.DB_USER,

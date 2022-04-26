@@ -51,7 +51,7 @@ export class PasswordService {
       const res = jwt.verify(token, process.env.JWT_SECRET);
       return res;
     } catch (e) {
-      return false;
+      return null;
     }
   }
 }

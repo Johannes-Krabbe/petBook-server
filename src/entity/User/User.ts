@@ -1,5 +1,5 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, Generated, CreateDateColumn } from 'typeorm'
-
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, Generated, ManyToOne}  from 'typeorm'
+import { Pet } from '../Pet/Pet'
 @Entity('users')
 export class User extends BaseEntity {
     @PrimaryGeneratedColumn()
@@ -15,6 +15,9 @@ export class User extends BaseEntity {
     public username: string
 
     @Column({ type: 'varchar', nullable: false })
+    public email: string
+
+    @Column({ type: 'varchar', nullable: false })
     public passwordHash: string
 
     @Column({ type: 'varchar', nullable: false })
@@ -28,5 +31,8 @@ export class User extends BaseEntity {
 
     @Column({ type: 'varchar', nullable: false })
     public profilePictureUrl: string
+
+    @ManyToOne(() => Pet, pet => pet.owner)
+    pets: Pet[];
 
 }
