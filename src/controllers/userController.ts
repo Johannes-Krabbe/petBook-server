@@ -57,9 +57,16 @@ userController.post(
 );
 
 userController.get(
-	"/getUsers",
+	"/getUser/:userName",
 	asyncHandler(async (req: Request, res: Response) => {
-		res.status(200).send();
+		const user = await User.findOne({ uuid: req.body.userUuid });
+		const data = {
+			username: user.username,
+			name: user.name,
+			bio: user.bio,
+			pets: user.pets,
+		};
+		res.status(200).send(data);
 	})
 );
 

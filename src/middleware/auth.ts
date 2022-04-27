@@ -13,9 +13,14 @@ async function authMiddleware(req: Request, res: Response, next: NextFunction) {
 		} else {
 			res.status(401).send();
 		}
+	} else {
+		res.status(401).send();
 	}
-
-	next();
+	if (req.body.userUuid) {
+		next();
+	} else {
+		res.status(401).send();
+	}
 }
 
 export default authMiddleware;
