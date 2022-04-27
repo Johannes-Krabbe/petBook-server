@@ -1,12 +1,12 @@
-import {Router} from 'express'
-import { indexController } from '../controllers/indexController'
-import { userController } from '../controllers/userController'
+import { Router } from "express";
+import { petController } from "../controllers/petController";
+import { indexController } from "../controllers/indexController";
+import { userController } from "../controllers/userController";
 
-const router = Router()
+const router = Router();
 
+router.use("/", indexController);
+router.use("/user/", userController);
+router.use("/pet/", petController);
 
-router.use('/', indexController)
-router.use('/user/', userController)
-
-
-export default router
+export default router;
