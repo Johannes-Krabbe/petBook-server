@@ -39,6 +39,6 @@ export class Pet extends BaseEntity {
 	@ManyToOne(() => User, (user) => user.pets)
 	public owner: User;
 
-	@ManyToMany(() => Post, (post) => post.pets)
+	@OneToMany(() => Post, (post) => post.pet)
 	public posts: Post[];
 }
