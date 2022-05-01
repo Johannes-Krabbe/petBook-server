@@ -10,7 +10,6 @@ import {
 	ManyToMany,
 } from "typeorm";
 import { Pet } from "../Pet/Pet";
-import { Comment } from "../Comment/Comment";
 
 @Entity("posts")
 export class Post extends BaseEntity {
@@ -27,7 +26,4 @@ export class Post extends BaseEntity {
 
 	@ManyToOne(() => Pet, (pet) => pet.posts)
 	public pet: Pet;
-
-	@ManyToOne(() => Comment, (comment) => comment.post)
-	public comments: Comment[];
 }
