@@ -1,7 +1,7 @@
 # PetBook
 
 PetBook is a social media platform build aroud pets. This project is created as an learning project to learn more about backend development.
-You can find a live version of the project under https://petbook.johanneskrabbe.com. The backend is deployed at https://petbook-api.johanneskrabbe.com.
+You can find a live version of the project under https://petbook.johanneskrabbe.com. The backend is deployed with this url: https://petbook-api.johanneskrabbe.com.
 
 ## Setup this project locally
 
@@ -28,7 +28,7 @@ The Production database is is hosted on Google CloudSQL.
 - Typeorm
 
 I chose the Techstack at the beginning of my learning jurney. My goal was to learn more about web-development, so it was convinient to use Typescript for both the backend and frontend, so I dont had to switch between languages.
-I decided on a Relational database over an NoSQL database, because connections are a key feature of an SocialMedia platform. Typeorm seemed to be an good fit as an object-relational mapper, to parameterize querries and prevent SQL Injection.
+I decided on a relational database over an NoSQL database, because relations are a key feature of an social media platform. Typeorm seemed to be an good fit as an object-relational mapper, to parameterize querries and prevent SQL Injection.
 
 ### Database
 
