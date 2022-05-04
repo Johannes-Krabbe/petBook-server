@@ -6,27 +6,25 @@ import { Pet } from "../entity/Pet/Pet";
 import { Post } from "../entity/Post/Post";
 
 import { getConnection } from "typeorm";
-import { PasswordService } from "../services/passwordService";
 import authMiddleware from "../middleware/auth";
+import createPetMiddleware from "../middleware/pet/createPet";
+import createPostMiddleware from "../middleware/pet/createPost";
 
 export const petController = Router();
 
-//middleware
+//auth middleware
 petController.use("/create", authMiddleware);
 petController.use("/createPost", authMiddleware);
 petController.use("/getMine", authMiddleware);
 
+//other middleware
+petController.use("/create", createPetMiddleware);
+petController.use("/createPost", createPostMiddleware);
+
+
 petController.post(
 	"/createPost",
 	asyncHandler(async (req: Request, res: Response) => {
-		/**
-        {
-            "name" : "johannes.krabbe",
-            "species" : "foo@bar.net",
-            "race" : "Johannes Krabbe",
-            "gender" : "I am Johannes, 19, from Berlin",
-        }
-        */
 
 		const user = await User.findOne({ uuid: req.body.userUuid });
 		const pet = await Pet.findOne(
@@ -55,13 +53,13 @@ petController.post(
 	"/create",
 	asyncHandler(async (req: Request, res: Response) => {
 		/**
-        {
-            "name" : "johannes.krabbe",
-            "species" : "foo@bar.net",
-            "race" : "Johannes Krabbe",
-            "gender" : "I am Johannes, 19, from Berlin",
-        }
-        */
+				{
+						"name" : "johannes.krabbe",
+						"species" : "foo@bar.net",
+						"race" : "Johannes Krabbe",
+						"gender" : "I am Johannes, 19, from Berlin",
+				}
+				*/
 		const user = await User.findOne({ uuid: req.body.userUuid });
 
 		await getConnection()
@@ -96,20 +94,35 @@ petController.get(
 	})
 );
 
-petController.get(
-	"/getAll",
-	asyncHandler(async (req: Request, res: Response) => {
-		const pets = await Pet.find({ relations: ["owner"] });
+// petController.get(
+// 	"/getAll",
+// 	asyncHandler(async (req: Request, res: Response) => {
+// 		const pets = await Pet.find({ relations: ["owner"] });
 
-		res.status(200).send(pets);
-	})
-);
+// 		res.status(200).send(pets);
+// 	})
+// );
 
 petController.get(
 	"/getAllPosts",
 	asyncHandler(async (req: Request, res: Response) => {
 		const posts = await Post.find({ relations: ["pet", "pet.owner"] });
 
-		res.status(200).send(posts);
+		const data: Array<object> = []
+
+		for (const post of posts) {
+			data.push({
+				id: post.id,
+				content: post.content,
+				pet: {
+					name: post.pet.name,
+					owner: {
+						name: post.pet.owner.name,
+					}
+				}
+			})
+		}
+
+		res.status(200).send(data);
 	})
 );
