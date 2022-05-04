@@ -78,7 +78,15 @@ userController.get(
 	asyncHandler(async (req: Request, res: Response) => {
 		const user = await User.findOne({ uuid: req.body.userUuid });
 
-		res.status(200).send(user);
+		const data = {
+			name: user.name,
+			username: user.username,
+			email: user.email,
+			bio: user.bio,
+			profilePictureUrl: user.profilePictureUrl,
+		}
+
+		res.status(200).send(data);
 	})
 );
 

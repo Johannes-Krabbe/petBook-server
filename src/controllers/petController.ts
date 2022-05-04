@@ -94,20 +94,35 @@ petController.get(
 	})
 );
 
-petController.get(
-	"/getAll",
-	asyncHandler(async (req: Request, res: Response) => {
-		const pets = await Pet.find({ relations: ["owner"] });
+// petController.get(
+// 	"/getAll",
+// 	asyncHandler(async (req: Request, res: Response) => {
+// 		const pets = await Pet.find({ relations: ["owner"] });
 
-		res.status(200).send(pets);
-	})
-);
+// 		res.status(200).send(pets);
+// 	})
+// );
 
 petController.get(
 	"/getAllPosts",
 	asyncHandler(async (req: Request, res: Response) => {
 		const posts = await Post.find({ relations: ["pet", "pet.owner"] });
 
-		res.status(200).send(posts);
+		const data: Array<object> = []
+
+		for (const post of posts) {
+			data.push({
+				id: post.id,
+				content: post.content,
+				pet: {
+					name: post.pet.name,
+					owner: {
+						name: post.pet.owner.name,
+					}
+				}
+			})
+		}
+
+		res.status(200).send(data);
 	})
 );
