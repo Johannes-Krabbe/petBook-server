@@ -8,6 +8,7 @@ import { Post } from "../entity/Post/Post";
 import { getConnection } from "typeorm";
 import authMiddleware from "../middleware/auth";
 import createPetMiddleware from "../middleware/pet/createPet";
+import createPostMiddleware from "../middleware/pet/createPost";
 
 export const petController = Router();
 
@@ -18,6 +19,7 @@ petController.use("/getMine", authMiddleware);
 
 //other middleware
 petController.use("/create", createPetMiddleware);
+petController.use("/createPost", createPostMiddleware);
 
 
 petController.post(

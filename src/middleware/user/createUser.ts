@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 
 async function createUserMiddleware(req: Request, res: Response, next: NextFunction) {
-	let valid = true
+	let valid = false
 	/**
 			{
 					"username" : "johannes.krabbe",
@@ -13,29 +13,17 @@ async function createUserMiddleware(req: Request, res: Response, next: NextFunct
 			}
 			*/
 
-	if (req.body.username.lenght > 3) {
-		valid = false
+	if (!(req.body.username.lenght > 3) ||
+		!(req.body.email.lenght > 3) ||
+		!(req.body.password.lenght > 3) ||
+		!(req.body.name.lenght > 3) ||
+		!(req.body.bio.lenght > 3)
+	) {
+		valid = true
 	}
-	if (req.body.email > 3) {
-		valid = false
-	}
-	if (req.body.password > 3) {
-		valid = false
-	}
-	if (req.body.name > 3) {
-		valid = false
-	}
-	if (req.body.name > 3) {
-		valid = false
-	}
-	if (req.body.bio > 3) {
-		valid = false
-	}
-	// if (req.body.profilePictureUrl > 3) {
-	// 	valid = false
-	// }
+	// !(req.body.profilePictureUrl > 3)
 
-	if (valid) {
+	if (!valid) {
 		next()
 	} else {
 		res.status(400).send({ message: "Every field must contain at least 4 characters" })
