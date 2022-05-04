@@ -6,25 +6,28 @@ import { User } from "../entity/User/User";
 import { getConnection } from "typeorm";
 import { PasswordService } from "../services/passwordService";
 import authMiddleware from "../middleware/auth";
+import createUserMiddleware from "../middleware/user/createUser";
 
 export const userController = Router();
 
 //middleware
 userController.use("/getMe", authMiddleware);
+userController.use("/createUser", createUserMiddleware);
+
 
 userController.post(
 	"/createUser",
 	asyncHandler(async (req: Request, res: Response) => {
 		/**
-        {
-            "username" : "johannes.krabbe",
-            "email" : "foo@bar.net",
-            "password" : "qwerty",
-            "name" : "Johannes Krabbe",
-            "bio" : "I am Johannes, 19, from Berlin",
-            "profilePictureUrl" : "https://picsum.photos/200"
-        }
-        */
+				{
+						"username" : "johannes.krabbe",
+						"email" : "foo@bar.net",
+						"password" : "qwerty",
+						"name" : "Johannes Krabbe",
+						"bio" : "I am Johannes, 19, from Berlin",
+						"profilePictureUrl" : "https://picsum.photos/200"
+				}
+				*/
 
 		if ((await User.find({ username: req.body.username })).length !== 0) {
 			res.status(409).send("There is already an account with this username");

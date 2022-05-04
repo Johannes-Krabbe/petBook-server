@@ -6,27 +6,23 @@ import { Pet } from "../entity/Pet/Pet";
 import { Post } from "../entity/Post/Post";
 
 import { getConnection } from "typeorm";
-import { PasswordService } from "../services/passwordService";
 import authMiddleware from "../middleware/auth";
+import createPetMiddleware from "../middleware/pet/createPet";
 
 export const petController = Router();
 
-//middleware
+//auth middleware
 petController.use("/create", authMiddleware);
 petController.use("/createPost", authMiddleware);
 petController.use("/getMine", authMiddleware);
 
+//other middleware
+petController.use("/create", createPetMiddleware);
+
+
 petController.post(
 	"/createPost",
 	asyncHandler(async (req: Request, res: Response) => {
-		/**
-        {
-            "name" : "johannes.krabbe",
-            "species" : "foo@bar.net",
-            "race" : "Johannes Krabbe",
-            "gender" : "I am Johannes, 19, from Berlin",
-        }
-        */
 
 		const user = await User.findOne({ uuid: req.body.userUuid });
 		const pet = await Pet.findOne(
@@ -55,13 +51,13 @@ petController.post(
 	"/create",
 	asyncHandler(async (req: Request, res: Response) => {
 		/**
-        {
-            "name" : "johannes.krabbe",
-            "species" : "foo@bar.net",
-            "race" : "Johannes Krabbe",
-            "gender" : "I am Johannes, 19, from Berlin",
-        }
-        */
+				{
+						"name" : "johannes.krabbe",
+						"species" : "foo@bar.net",
+						"race" : "Johannes Krabbe",
+						"gender" : "I am Johannes, 19, from Berlin",
+				}
+				*/
 		const user = await User.findOne({ uuid: req.body.userUuid });
 
 		await getConnection()
