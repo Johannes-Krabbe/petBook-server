@@ -3,16 +3,40 @@ import asyncHandler from "express-async-handler";
 
 import { User } from "../entity/User/User";
 
-import { getConnection } from "typeorm";
+import { getConnection, createQueryBuilder } from "typeorm";
 import { PasswordService } from "../services/passwordService";
 import authMiddleware from "../middleware/auth";
 import createUserMiddleware from "../middleware/user/createUser";
 
 export const userController = Router();
 
-//middleware
+//auth middleware
 userController.use("/getMe", authMiddleware);
+userController.use("/edit", authMiddleware);
+
+// other middleware
 userController.use("/createUser", createUserMiddleware);
+
+userController.post(
+	"/edit",
+	asyncHandler(async (req: Request, res: Response) => {
+
+		await getConnection()
+			.createQueryBuilder()
+			.update(User)
+			.set({
+				name: req.body.name,
+				username: req.body.username,
+				email: req.body.email,
+			})
+			.where({ uuid: req.body.userUuid })
+			.execute();
+
+
+		res.status(200).send({ message: "success" })
+	})
+);
+
 
 
 userController.post(
@@ -76,7 +100,7 @@ userController.get(
 userController.get(
 	"/getMe",
 	asyncHandler(async (req: Request, res: Response) => {
-		const user = await User.findOne({ uuid: req.body.userUuid });
+		const user = await User.findOne({ uuid: req.body.userUuid }, { relations: ["pets", "pets.posts"] })
 
 		const data = {
 			name: user.name,
@@ -84,6 +108,7 @@ userController.get(
 			email: user.email,
 			bio: user.bio,
 			profilePictureUrl: user.profilePictureUrl,
+			pets: user.pets
 		}
 
 		res.status(200).send(data);
