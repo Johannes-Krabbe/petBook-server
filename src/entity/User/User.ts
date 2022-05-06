@@ -3,11 +3,16 @@ import {
 	Column,
 	Entity,
 	PrimaryGeneratedColumn,
+	CreateDateColumn,
+	UpdateDateColumn,
 	Generated,
 	ManyToOne,
 	OneToMany,
 } from "typeorm";
 import { Pet } from "../Pet/Pet";
+import { Post } from "../Post/Post";
+
+
 @Entity("users")
 export class User extends BaseEntity {
 	@PrimaryGeneratedColumn()
@@ -41,4 +46,13 @@ export class User extends BaseEntity {
 
 	@OneToMany(() => Pet, (pet) => pet.owner)
 	pets: Pet[];
+
+	@OneToMany(() => Post, (post) => post.user)
+	posts: Post[];
+
+	@CreateDateColumn()
+	public createdAt: Date
+
+	@UpdateDateColumn()
+	public updatedAt: Date
 }

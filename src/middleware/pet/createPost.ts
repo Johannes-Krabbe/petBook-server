@@ -8,7 +8,7 @@ async function createPostMiddleware(req: Request, res: Response, next: NextFunct
 	}
 
 
-	if (!valid) {
+	if (valid) {
 		next()
 	} else {
 		res.status(400).send({ message: "Every post must contain at least 4 characters" })

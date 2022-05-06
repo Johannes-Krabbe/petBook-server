@@ -100,7 +100,9 @@ userController.get(
 userController.get(
 	"/getMe",
 	asyncHandler(async (req: Request, res: Response) => {
-		const user = await User.findOne({ uuid: req.body.userUuid }, { relations: ["pets", "pets.posts"] })
+		const user = await User.findOne({ uuid: req.body.userUuid }, { relations: ["pets", "posts", "posts.pet"] })
+
+		console.log(user)
 
 		const data = {
 			name: user.name,
@@ -108,7 +110,8 @@ userController.get(
 			email: user.email,
 			bio: user.bio,
 			profilePictureUrl: user.profilePictureUrl,
-			pets: user.pets
+			pets: user.pets,
+			posts: user.posts.reverse()
 		}
 
 		res.status(200).send(data);
