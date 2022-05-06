@@ -11,6 +11,7 @@ import {
 	ManyToMany,
 } from "typeorm";
 import { Pet } from "../Pet/Pet";
+import { User } from "../User/User";
 
 @Entity("posts")
 export class Post extends BaseEntity {
@@ -27,6 +28,9 @@ export class Post extends BaseEntity {
 
 	@ManyToOne(() => Pet, (pet) => pet.posts)
 	public pet: Pet;
+
+	@ManyToOne(() => User, (user) => user.posts)
+	public user: User;
 
 	@CreateDateColumn()
 	public createdAt: Date

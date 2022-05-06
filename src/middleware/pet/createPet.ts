@@ -18,7 +18,7 @@ async function createPetMiddleware(req: Request, res: Response, next: NextFuncti
 		valid = true
 	}
 
-	if (!valid) {
+	if (valid) {
 		next()
 	} else {
 		res.status(400).send({ message: "Every field must contain at least 2 characters" })
