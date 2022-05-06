@@ -5,6 +5,7 @@ import {
 	PrimaryGeneratedColumn,
 	Generated,
 	CreateDateColumn,
+	UpdateDateColumn,
 	ManyToOne,
 	OneToMany,
 	ManyToMany,
@@ -26,4 +27,10 @@ export class Post extends BaseEntity {
 
 	@ManyToOne(() => Pet, (pet) => pet.posts)
 	public pet: Pet;
+
+	@CreateDateColumn()
+	public createdAt: Date
+
+	@UpdateDateColumn()
+	public updatedAt: Date
 }

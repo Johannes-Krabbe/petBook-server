@@ -3,6 +3,8 @@ import {
 	Column,
 	Entity,
 	PrimaryGeneratedColumn,
+	CreateDateColumn,
+	UpdateDateColumn,
 	Generated,
 	ManyToOne,
 	OneToMany,
@@ -41,4 +43,10 @@ export class User extends BaseEntity {
 
 	@OneToMany(() => Pet, (pet) => pet.owner)
 	pets: Pet[];
+
+	@CreateDateColumn()
+	public createdAt: Date
+
+	@UpdateDateColumn()
+	public updatedAt: Date
 }

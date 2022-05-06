@@ -13,6 +13,8 @@ async function createUserMiddleware(req: Request, res: Response, next: NextFunct
 			}
 			*/
 
+	console.log(req.body)
+
 	if (!(req.body.username.lenght > 3) ||
 		!(req.body.email.lenght > 3) ||
 		!(req.body.password.lenght > 3) ||
@@ -23,7 +25,7 @@ async function createUserMiddleware(req: Request, res: Response, next: NextFunct
 	}
 	// !(req.body.profilePictureUrl > 3)
 
-	if (!valid) {
+	if (valid) {
 		next()
 	} else {
 		res.status(400).send({ message: "Every field must contain at least 4 characters" })
