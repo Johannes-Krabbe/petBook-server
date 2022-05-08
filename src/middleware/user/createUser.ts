@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 
 async function createUserMiddleware(req: Request, res: Response, next: NextFunction) {
-	let valid = true
 	/**
 			{
 					"username" : "johannes.krabbe",
@@ -13,34 +12,34 @@ async function createUserMiddleware(req: Request, res: Response, next: NextFunct
 			}
 			*/
 
-	console.log(req.body)
 
-	if (!(req.body.username.lenght > 2)) { valid = false }
-	if (!(req.body.username.lenght > 2)) { valid = false }
-	if (!(req.body.email.lenght > 2)) { valid = false }
-	if (!(req.body.password.lenght > 2)) { valid = false }
-	if (!(req.body.name.lenght > 2)) { valid = false }
-	if (!(req.body.bio.lenght > 2)) { valid = false }
-
-	if (!valid) {
+	if (req.body.username.length < 2) {
+		console.log("HELLOOOOO")
 		res.status(400).send({ message: "Every field must contain at least 3 characters" })
 		return
 	}
-
-	if (!(req.body.username.includes(" "))) { valid = false }
-
-	if (!valid) {
-		res.status(400).send({ message: "please enter a username without a space." })
+	else if (req.body.email.length < 2) {
+		res.status(400).send({ message: "Every field must contain at least 3 characters" })
 		return
 	}
-
-	if (valid) {
-		next()
-	} else {
-		// cant happen, shouldnt happen in the future. 
-		res.status(400).send({ message: "Something went wrong" })
+	else if (req.body.name.length < 2) {
+		res.status(400).send({ message: "Every field must contain at least 3 characters" })
+		return
 	}
-
+	else if (req.body.password.length < 2) {
+		res.status(400).send({ message: "Every field must contain at least 3 characters" })
+		return
+	}
+	else if (req.body.bio.length < 2) {
+		res.status(400).send({ message: "Every field must contain at least 3 characters" })
+		return
+	}
+	else if (req.body.username.includes(" ")) {
+		res.status(400).send({ message: "please enter a username without a space." })
+		return
+	} else {
+		next()
+	}
 }
 
 export default createUserMiddleware;

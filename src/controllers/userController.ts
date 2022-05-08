@@ -54,9 +54,10 @@ userController.post(
 				*/
 
 		if ((await User.find({ username: req.body.username })).length !== 0) {
-			res.status(409).send("There is already an account with this username");
+			res.status(409).send({ message: "There is already an account with this username" });
 		} else if ((await User.find({ email: req.body.email })).length !== 0) {
-			res.status(409).send("There is already an account with this email");
+			console.log(await User.find({ email: req.body.email }))
+			res.status(409).send({ message: "There is already an account with this email" });
 		} else {
 			const passwordData = await PasswordService.hashPassword(
 				req.body.password
