@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 
 async function createUserMiddleware(req: Request, res: Response, next: NextFunction) {
-	let valid = false
+	let valid = true
 	/**
 			{
 					"username" : "johannes.krabbe",
@@ -15,20 +15,30 @@ async function createUserMiddleware(req: Request, res: Response, next: NextFunct
 
 	console.log(req.body)
 
-	if (!(req.body.username.lenght > 3) ||
-		!(req.body.email.lenght > 3) ||
-		!(req.body.password.lenght > 3) ||
-		!(req.body.name.lenght > 3) ||
-		!(req.body.bio.lenght > 3)
-	) {
-		valid = true
+	if (!(req.body.username.lenght > 2)) { valid = false }
+	if (!(req.body.username.lenght > 2)) { valid = false }
+	if (!(req.body.email.lenght > 2)) { valid = false }
+	if (!(req.body.password.lenght > 2)) { valid = false }
+	if (!(req.body.name.lenght > 2)) { valid = false }
+	if (!(req.body.bio.lenght > 2)) { valid = false }
+
+	if (!valid) {
+		res.status(400).send({ message: "Every field must contain at least 3 characters" })
+		return
 	}
-	// !(req.body.profilePictureUrl > 3)
+
+	if (!(req.body.username.includes(" "))) { valid = false }
+
+	if (!valid) {
+		res.status(400).send({ message: "please enter a username without a space." })
+		return
+	}
 
 	if (valid) {
 		next()
 	} else {
-		res.status(400).send({ message: "Every field must contain at least 4 characters" })
+		// cant happen, shouldnt happen in the future. 
+		res.status(400).send({ message: "Something went wrong" })
 	}
 
 }

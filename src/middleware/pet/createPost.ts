@@ -1,10 +1,10 @@
 import { Request, Response, NextFunction } from "express";
 
 async function createPostMiddleware(req: Request, res: Response, next: NextFunction) {
-	let valid = false
+	let valid = true
 
 	if (!(req.body.content.lenght > 3)) {
-		valid = true
+		valid = false
 	}
 
 
