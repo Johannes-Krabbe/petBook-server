@@ -8,12 +8,16 @@ import { Post } from "../entity/Post/Post";
 import { getConnection } from "typeorm";
 
 import authMiddleware from "../middleware/auth";
+import createPostMiddleware from "../middleware/pet/createPost";
 
 export const postController = Router();
 
 // auth middlewares
 postController.use("/getMine", authMiddleware)
 postController.use("/create", authMiddleware)
+
+
+postController.use("/create", createPostMiddleware)
 
 
 /*

@@ -10,17 +10,17 @@ async function createPetMiddleware(req: Request, res: Response, next: NextFuncti
 							"gender" : "I am Johannes, 19, from Berlin",
 					}
 					*/
-	if (!(req.body.name.lenght > 1)) {
+	if (!(req.body.name.length > 1)) {
 		valid = false
 	}
 
-	if (!(req.body.species.lenght > 1)) {
+	if (!(req.body.species.length > 1)) {
 		valid = false
 	}
-	if (!(req.body.race.lenght > 1)) {
+	if (!(req.body.race.length > 1)) {
 		valid = false
 	}
-	if (!(req.body.gender.lenght > 1)) {
+	if (!(req.body.gender.length > 1)) {
 		valid = false
 	}
 
