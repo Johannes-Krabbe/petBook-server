@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 
 async function createPetMiddleware(req: Request, res: Response, next: NextFunction) {
-	let valid = false
+	let valid = true
 	/**
 					{
 							"name" : "johannes.krabbe",
@@ -10,13 +10,21 @@ async function createPetMiddleware(req: Request, res: Response, next: NextFuncti
 							"gender" : "I am Johannes, 19, from Berlin",
 					}
 					*/
-	if (!(req.body.name.lenght > 1) ||
-		!(req.body.species > 1) ||
-		!(req.body.race > 1) ||
-		!(req.body.gender > 1)
-	) {
-		valid = true
+	if (!(req.body.name.lenght > 1)) {
+		valid = false
 	}
+
+	if (!(req.body.species.lenght > 1)) {
+		valid = false
+	}
+	if (!(req.body.race.lenght > 1)) {
+		valid = false
+	}
+	if (!(req.body.gender.lenght > 1)) {
+		valid = false
+	}
+
+
 
 	if (valid) {
 		next()
